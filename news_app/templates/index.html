@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block titile %}Home page{% endblock %}
+
+{% block content %}
+        <section class="hot-news">
+            <div class="container-fluid">
+                <h1>Hot news today</h1>
+                <div class="hot-news-grid">
+                    {% for hot_post in hot_posts %}
+                    <a href="{% url 'read_news_page' pk=hot_post.pk %}" class="hot-news__item"
+                        style="background: linear-gradient(rgba(0,0,0,0.33), rgba(0,0,0,0.33)), url({{ hot_post.image_url }}); background-size: cover;">
+                        <h3>{{ hot_post.title|truncatewords:7 }}</h3>
+                        <span>{{ hot_post.created_at|date:"d.m.Y" }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <section class="main-block">
+            <div class="container-fluid">
+                <div class="news-block">
+                    <h4>Last news</h4>
+                    {% for post in last_posts %}
+                    <div class="news-block__card">
+                        <img src="{{ post.image_url }}" alt="" class="news-block__img">
+                        <div class="news-block__content">
+                            <h3>{{ post.title|truncatewords:10 }}</h3>
+                            <span>{{ post.created_at|date:"d.m.Y"}}</span>
+                            <a href="{% url 'news_by_category' pk=post.category.pk %}" class="category-tag">#{{ post.category.name }}</a>
+                            <p>{{ post.content|truncatewords:20 }}</p>
+                            <a href="{% url 'read_news_page' pk=post.pk %}" class="uppercase">Read</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            <div class="adv-block">
+                <h3>Advertising</h3>
+                <div class="adv-block-data">
+                    <div class="adv-block__content">
+                        {% for adv in advs %}
+                        <div class="adv-block__content">
+                            <img src="{{ adv.image_url }}"
+                                alt="{{ adv.title }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            </div>
+    <center>
+        <a href="{% url 'all_news' %}" class="See">See all</a>
+    </center>
+
+        </section>
+{% endblock %}

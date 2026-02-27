@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<section class="main-block">
+            <div class="container-fluid">
+                <div class="news-block">
+                    <h4>{{ post.title }}</h4>
+                    <p class="mb-15">{{ post.created_at|date:"d.m.Y" }}</p>
+                    <img src="{{ post.image_url }}" alt="" class="rounded-img">
+                    <p class="mb-15">{{ post.content }}</p>
+                    <a href="{% url 'news_by_category' pk=post.category.pk %}" class="category-tag">#{{ post.category.name }}</a>
+                </div>
+            <div class="adv-block">
+                <h3>Advertising</h3>
+                <div class="adv-block-data">
+                    <div class="adv-block__content">
+                        {% for adv in advs %}
+                        <div class="adv-block__content">
+                            <img src="{{ adv.image_url }}"
+                                alt="{{ adv.title }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            </div>
+
+    </section>
+{% endblock %}
